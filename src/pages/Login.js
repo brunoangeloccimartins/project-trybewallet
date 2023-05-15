@@ -1,6 +1,7 @@
 import React from 'react';
-import { addUser } from '../redux/actions';
 import { connect } from 'react-redux';
+import propTypes from 'prop-types';
+import { addUser } from '../redux/actions';
 
 const six = 6;
 
@@ -8,41 +9,41 @@ class Login extends React.Component {
   state = {
     email: '',
     password: '',
-    isDisabled: true
+    isDisabled: true,
   };
 
   handleChange = ({ target }) => {
     const { name } = target;
-    const  value  = target.value;
+    const { value } = target;
     this.setState({
       [name]: value,
     }, this.verify);
   };
 
   verify = () => {
-    const {email, password } = this.state;
+    const { email, password } = this.state;
     const regexEmail = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-    const verifyEmail = regexEmail.test(email)
-    if (email.length >= 6 && password.length >= 6 && verifyEmail) {
+    const verifyEmail = regexEmail.test(email);
+    if (email.length >= six && password.length >= six && verifyEmail) {
       this.setState({
-        isDisabled: false
-      })
+        isDisabled: false,
+      });
+    } else {
+      this.setState({
+        isDisabled: true,
+      });
     }
-     else this.setState({
-      isDisabled:true
-    })
-  }
+  };
 
   onSubmit = (e) => {
     e.preventDefault();
-    const { dispatch, history} = this.props;
-    dispatch(addUser({ email:this.state.email}));
-    history.push('/carteira')
-  }
+    const { dispatch, history } = this.props;
+    dispatch(addUser({ email }));
+    history.push('/carteira');
+  };
 
   render() {
     const { isDisabled } = this.state;
-    const {email} = this.props
     return (
       <main>
         <div>
@@ -52,7 +53,7 @@ class Login extends React.Component {
               name="email"
               type="email"
               onChange={ this.handleChange }
-              data-testid = 'email-input'
+              data-testid="email-input"
             />
           </label>
           <label>
@@ -61,14 +62,14 @@ class Login extends React.Component {
               name="password"
               type="password"
               onChange={ this.handleChange }
-              data-testid='password-input'
+              data-testid="password-input"
             />
           </label>
         </div>
         <div>
           <button
             disabled={ isDisabled }
-            onClick={this.onSubmit}
+            onClick={ this.onSubmit }
           >
             Entrar
           </button>
@@ -77,10 +78,15 @@ class Login extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
-  return {
-    email: state.user.email
-  };
+const mapStateToProps = (state) => ({
+  email: state.user.email,
+});
+
+Login.propTypes = {
+  dispatch: propTypes.func.isRequired,
+  history: propTypes.shape({
+    push: propTypes.func,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps)(Login);
