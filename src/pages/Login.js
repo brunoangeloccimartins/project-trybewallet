@@ -36,6 +36,7 @@ class Login extends React.Component {
   };
 
   onSubmit = (e) => {
+    const { email } = this.state;
     e.preventDefault();
     const { dispatch, history } = this.props;
     dispatch(addUser({ email }));
