@@ -8,7 +8,19 @@ export const addUser = ({ email }) => ({
 
 export const WALLET = 'WALLET';
 
-export const walletData = (walletInfo) => ({
+export const walletData = (data) => ({
   type: WALLET,
-  payload: walletInfo,
+  payload: data,
 });
+
+const economiesApi = async () => {
+  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const apiResponse = await response.json();
+  return apiResponse;
+};
+
+export const actionApi = () => async (dispatch) => {
+  const data = await economiesApi();
+  const coins = Object.keys(data).filter((key) => key !== 'USDT');
+  dispatch(walletData(coins));
+};
