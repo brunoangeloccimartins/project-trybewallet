@@ -10,7 +10,21 @@ export const WALLET = 'WALLET';
 
 export const walletData = (data) => ({
   type: WALLET,
-  payload: data,
+  payload: Object.keys(data).filter((key) => key !== 'USDT'),
+});
+
+export const EXPENSE = 'EXPENSE';
+
+export const expenseData = (expense) => ({
+  type: EXPENSE,
+  payload: expense,
+});
+
+export const EXCHANGE_RATES = 'EXCHANGE_RATES';
+
+export const exchangeRates = (info) => ({
+  type: EXCHANGE_RATES,
+  payload: info,
 });
 
 const economiesApi = async () => {
@@ -21,6 +35,6 @@ const economiesApi = async () => {
 
 export const actionApi = () => async (dispatch) => {
   const data = await economiesApi();
-  const coins = Object.keys(data).filter((key) => key !== 'USDT');
-  dispatch(walletData(coins));
+  dispatch(walletData(data));
+  dispatch(exchangeRates(data));
 };

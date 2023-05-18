@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import { addUser } from '../redux/actions';
+// import './Login.css';
 
 const six = 6;
 
@@ -48,6 +49,7 @@ class Login extends React.Component {
     return (
       <main>
         <div>
+          <h2>TrybeWallet</h2>
           <label>
             Email:
             <input
