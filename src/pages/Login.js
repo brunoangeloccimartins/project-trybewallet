@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import { addUser } from '../redux/actions';
-// import './Login.css';
 
 const six = 6;
 
