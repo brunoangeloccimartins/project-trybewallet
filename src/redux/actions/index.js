@@ -27,6 +27,13 @@ export const exchangeRates = (info) => ({
   payload: info,
 });
 
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+
+export const deleteExpense = (id) => ({
+  type: DELETE_EXPENSE,
+  payload: id,
+});
+
 const economiesApi = async () => {
   const response = await fetch('https://economia.awesomeapi.com.br/json/all');
   const apiResponse = await response.json();
